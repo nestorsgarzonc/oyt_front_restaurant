@@ -8,7 +8,8 @@ final restaurantDataSourceProvider = Provider<RestaurantDataSource>((ref) {
 });
 
 abstract class RestaurantDataSource {
-  Future<RestaurantModel> getRestaurant(String tableId);
+  Future<RestaurantModel> getMenuByRestaurant(String tableId);
+  Future<RestaurantModel> getMenuByTable(String tableId);
 }
 
 class RestaurantDataSourceImpl implements RestaurantDataSource {
@@ -21,9 +22,20 @@ class RestaurantDataSourceImpl implements RestaurantDataSource {
   final ApiHandler apiHandler;
 
   @override
-  Future<RestaurantModel> getRestaurant(String tableId) async {
+  Future<RestaurantModel> getMenuByRestaurant(String tableId) async {
     try {
       final res = await apiHandler.get('/menu/get-menu/$tableId');
+      return RestaurantModel.fromMap(res.responseMap!);
+    } catch (e, s) {
+      Logger.logError(e.toString(), s);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<RestaurantModel> getMenuByTable(String tableId) async {
+    try {
+      final res = await apiHandler.get('/menu/$tableId');
       return RestaurantModel.fromMap(res.responseMap!);
     } catch (e, s) {
       Logger.logError(e.toString(), s);
