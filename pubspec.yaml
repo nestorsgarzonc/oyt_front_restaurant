@@ -9,11 +9,8 @@ environment:
   flutter: ">=3.3.10"
 
 dependencies:
-  dartz: ^0.10.1
-  equatable: ^2.0.5
   flutter:
     sdk: flutter
-  flutter_riverpod: ^2.1.1
   oyt_front_core:
     path: ../oyt_front_core
 
