@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 class RestaurantModel extends Equatable {
@@ -13,10 +12,10 @@ class RestaurantModel extends Equatable {
       email: map['restaurant']['email'] ?? '',
       address: map['restaurant']['address'] ?? '',
       description: map['restaurant']['description'] ?? '',
-      imageUrl: map['restaurant']['imageUrl'],
+      imageUrl: map['restaurant']['image'],
       categories: List<Menu>.from(map['restaurant']['menu']?.map((x) => Menu.fromMap(x))),
       tableName: map['table']?['name'] ?? '',
-      logoUrl: map['restaurant']['logoUrl'],
+      logoUrl: map['restaurant']['logo'],
     );
   }
 
@@ -99,7 +98,7 @@ class Menu extends Equatable {
     return Menu(
       id: map['_id'] ?? '',
       name: map['name'] ?? '',
-      imgUrl: map['imgUrl'] ?? '',
+      imgUrl: map['img'] ?? '',
       description: map['description'] ?? '',
       menuItems: List<MenuItem>.from(map['menuItems']?.map((x) => MenuItem.fromMap(x))),
       isAvaliable: map['isAvaliable'] ?? false,
@@ -164,7 +163,7 @@ class MenuItem extends Equatable {
       id: map['_id'] ?? '',
       name: map['name'] ?? '',
       price: map['price']?.toInt() ?? 0,
-      imgUrl: map['imgUrl'] ?? '',
+      imgUrl: map['img'] ?? '',
       isAvaliable: map['isAvaliable'] ?? false,
       description: map['description'] ?? '',
     );
