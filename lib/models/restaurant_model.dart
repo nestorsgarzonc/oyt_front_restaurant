@@ -145,7 +145,7 @@ class Menu extends Equatable {
     return {
       '_id': id,
       'name': name,
-      'imgUrl': imgUrl,
+      'img': imgUrl,
       'description': description,
       'menuItems': menuItems.map((x) => x.toMap()).toList(),
       'isAvaliable': isAvaliable,
@@ -210,7 +210,7 @@ class MenuItem extends Equatable {
       '_id': id,
       'name': name,
       'price': price,
-      'imgUrl': imgUrl,
+      'img': imgUrl,
       'isAvaliable': isAvaliable,
     };
   }
