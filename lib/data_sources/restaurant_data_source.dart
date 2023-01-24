@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oyt_front_core/external/api_handler.dart';
 import 'package:oyt_front_core/logger/logger.dart';
+import 'package:oyt_front_restaurant/models/restaurant_creation_model.dart';
 import 'package:oyt_front_restaurant/models/restaurant_model.dart';
 
 final restaurantDataSourceProvider = Provider<RestaurantDataSource>((ref) {
@@ -10,6 +11,7 @@ final restaurantDataSourceProvider = Provider<RestaurantDataSource>((ref) {
 abstract class RestaurantDataSource {
   Future<RestaurantModel> getMenuByRestaurant(String tableId);
   Future<RestaurantModel> getMenuByTable(String tableId);
+  Future<void> createRestaurant(RestaurantCreationModel restaurant);
 }
 
 class RestaurantDataSourceImpl implements RestaurantDataSource {
@@ -37,6 +39,16 @@ class RestaurantDataSourceImpl implements RestaurantDataSource {
     try {
       final res = await apiHandler.get('/menu/$tableId');
       return RestaurantModel.fromMap(res.responseMap!);
+    } catch (e, s) {
+      Logger.logError(e.toString(), s);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> createRestaurant(RestaurantCreationModel restaurant) async {
+    try {
+      await apiHandler.post('/restaurant', restaurant.toMap());
     } catch (e, s) {
       Logger.logError(e.toString(), s);
       rethrow;

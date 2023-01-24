@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oyt_front_core/failure/failure.dart';
 import 'package:oyt_front_restaurant/data_sources/restaurant_data_source.dart';
+import 'package:oyt_front_restaurant/models/restaurant_creation_model.dart';
 import 'package:oyt_front_restaurant/models/restaurant_model.dart';
 
 final restaurantRepositoryProvider = Provider<RestaurantRepository>((ref) {
@@ -11,6 +12,7 @@ final restaurantRepositoryProvider = Provider<RestaurantRepository>((ref) {
 abstract class RestaurantRepository {
   Future<Either<Failure, RestaurantModel>> getMenuByRestaurant(String tableId);
   Future<Either<Failure, RestaurantModel>> getMenuByTable(String tableId);
+  Future<Failure?> createRestaurant(RestaurantCreationModel restaurant);
 }
 
 class RestaurantRepositoryImpl implements RestaurantRepository {
@@ -39,6 +41,16 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
       return Right(restaurant);
     } catch (e) {
       return Left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Failure?> createRestaurant(RestaurantCreationModel restaurant) async {
+    try {
+      await dataSource.createRestaurant(restaurant);
+      return null;
+    } catch (e) {
+      return Failure(e.toString());
     }
   }
 }

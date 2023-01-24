@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:equatable/equatable.dart';
 import 'package:oyt_front_core/enums/payments_enum.dart';
 import 'package:oyt_front_core/enums/weekdays_enum.dart';
+import 'package:oyt_front_core/extensions/color_extension.dart';
 
 class RestaurantCreationModel extends Equatable {
   const RestaurantCreationModel({
@@ -60,8 +61,8 @@ class RestaurantCreationModel extends Equatable {
       'email': email,
       'name': name,
       'phone': phone,
-      'primaryColor': primaryColor?.value,
-      'secondaryColor': secondaryColor?.value,
+      'primaryColor': primaryColor?.toRgbString,
+      'secondaryColor': secondaryColor?.toRgbString,
       'logo': logoBase64,
       'image': imageBase64,
       'weekDays': weekDays?.map((x) => x.toMap()).toList(),
