@@ -1,27 +1,41 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:equatable/equatable.dart';
+import 'package:oyt_front_core/enums/payments_enum.dart';
+import 'package:oyt_front_core/enums/weekdays_enum.dart';
+import 'package:oyt_front_core/extensions/color_extension.dart';
 
 class RestaurantModel extends Equatable {
-  factory RestaurantModel.fromJson(String source) => RestaurantModel.fromMap(json.decode(source));
+  factory RestaurantModel.fromJson(String source) =>
+      RestaurantModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  factory RestaurantModel.fromMap(Map<String, dynamic> map) {
+  factory RestaurantModel.fromMap(Map<String, dynamic> rawMap) {
+    final Map map = rawMap['restaurant'];
     return RestaurantModel(
-      id: map['restaurant']['_id'] ?? '',
-      name: map['restaurant']['name'] ?? '',
-      phone: map['restaurant']['phone']?.toInt() ?? 0,
-      email: map['restaurant']['email'] ?? '',
-      address: map['restaurant']['address'] ?? '',
-      description: map['restaurant']['description'] ?? '',
-      imageUrl: map['restaurant']['image'],
-      categories: List<Menu>.from(map['restaurant']['menu']?.map((x) => Menu.fromMap(x))),
-      tableName: map['table']?['name'] ?? '',
-      logoUrl: map['restaurant']['logo'],
+      id: map['_id'] as String,
+      name: map['name'] as String,
+      phone: map['phone'] as int,
+      email: map['email'] as String,
+      address: map['address'] as String,
+      description: map['description'] as String,
+      imageUrl: map['image'] != null ? map['image'] as String : null,
+      logoUrl: map['logo'] != null ? map['logo'] as String : null,
+      tableName: map['name'] as String,
+      categories: List<Menu>.from(map['menu']?.map((x) => Menu.fromMap(x))),
+      paymentMethods:
+          (map['paymentMethods'] as List).map((e) => PaymentMethod.fromString(e)).toList(),
+      weekDays: (map['weekDays'] as List)
+          .map<Weekday>((x) => Weekday.fromMap(x as Map<String, dynamic>))
+          .toList(),
+      primaryColor: map['primaryColor'] != null ? (map['primaryColor'] as String).toColor : null,
+      secondaryColor:
+          map['secondaryColor'] != null ? (map['secondaryColor'] as String).toColor : null,
+      facebook: map['facebook'] != null ? map['facebook'] as String : null,
+      instagram: map['instagram'] != null ? map['instagram'] as String : null,
     );
   }
 
   const RestaurantModel({
-    required this.logoUrl,
-    required this.tableName,
     required this.id,
     required this.name,
     required this.phone,
@@ -29,7 +43,15 @@ class RestaurantModel extends Equatable {
     required this.address,
     required this.description,
     required this.imageUrl,
+    required this.logoUrl,
+    required this.tableName,
     required this.categories,
+    required this.paymentMethods,
+    required this.weekDays,
+    this.primaryColor,
+    this.secondaryColor,
+    this.facebook,
+    this.instagram,
   });
 
   final String id;
@@ -42,10 +64,34 @@ class RestaurantModel extends Equatable {
   final String? logoUrl;
   final String tableName;
   final List<Menu> categories;
+  final List<PaymentMethod> paymentMethods;
+  final List<Weekday> weekDays;
+  final Color? primaryColor;
+  final Color? secondaryColor;
+  final String? facebook;
+  final String? instagram;
 
   @override
-  List<Object?> get props =>
-      [id, name, phone, email, address, description, imageUrl, categories, tableName, logoUrl];
+  List<Object?> get props {
+    return [
+      id,
+      name,
+      phone,
+      email,
+      address,
+      description,
+      imageUrl,
+      logoUrl,
+      tableName,
+      categories,
+      paymentMethods,
+      weekDays,
+      primaryColor,
+      secondaryColor,
+      facebook,
+      instagram,
+    ];
+  }
 
   RestaurantModel copyWith({
     String? id,
@@ -55,40 +101,35 @@ class RestaurantModel extends Equatable {
     String? address,
     String? description,
     String? imageUrl,
-    List<Menu>? categories,
-    String? tableName,
     String? logoUrl,
+    String? tableName,
+    List<Menu>? categories,
+    List<PaymentMethod>? paymentMethods,
+    List<Weekday>? weekDays,
+    Color? primaryColor,
+    Color? secondaryColor,
+    String? facebook,
+    String? instagram,
   }) {
     return RestaurantModel(
       id: id ?? this.id,
-      logoUrl: logoUrl ?? this.logoUrl,
       name: name ?? this.name,
       phone: phone ?? this.phone,
       email: email ?? this.email,
       address: address ?? this.address,
       description: description ?? this.description,
       imageUrl: imageUrl ?? this.imageUrl,
-      categories: categories ?? this.categories,
+      logoUrl: logoUrl ?? this.logoUrl,
       tableName: tableName ?? this.tableName,
+      categories: categories ?? this.categories,
+      paymentMethods: paymentMethods ?? this.paymentMethods,
+      weekDays: weekDays ?? this.weekDays,
+      primaryColor: primaryColor ?? this.primaryColor,
+      secondaryColor: secondaryColor ?? this.secondaryColor,
+      facebook: facebook ?? this.facebook,
+      instagram: instagram ?? this.instagram,
     );
   }
-
-  Map<String, dynamic> toMap() {
-    return {
-      '_id': id,
-      'name': name,
-      'phone': phone,
-      'email': email,
-      'address': address,
-      'description': description,
-      'imageUrl': imageUrl,
-      'menu': categories.map((x) => x.toMap()).toList(),
-      'tableName': tableName,
-      'logoUrl': logoUrl,
-    };
-  }
-
-  String toJson() => json.encode(toMap());
 }
 
 class Menu extends Equatable {

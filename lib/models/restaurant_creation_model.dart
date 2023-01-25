@@ -56,19 +56,20 @@ class RestaurantCreationModel extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'address': address,
-      'description': description,
-      'email': email,
-      'name': name,
-      'phone': phone,
-      'primaryColor': primaryColor?.toRgbString,
-      'secondaryColor': secondaryColor?.toRgbString,
-      'logo': logoBase64,
-      'image': imageBase64,
-      'weekDays': weekDays?.map((x) => x.toMap()).toList(),
-      'facebook': facebook,
-      'instagram': instagram,
-      'paymentMethods': paymentMethods?.map((x) => x.paymentValue).toList(),
+      if (address?.isNotEmpty ?? false) 'address': address,
+      if (description?.isNotEmpty ?? false) 'description': description,
+      if (email?.isNotEmpty ?? false) 'email': email,
+      if (name?.isNotEmpty ?? false) 'name': name,
+      if (phone?.isNotEmpty ?? false) 'phone': phone,
+      if (logoBase64?.isNotEmpty ?? false) 'logo': logoBase64,
+      if (imageBase64?.isNotEmpty ?? false) 'image': imageBase64,
+      if (facebook?.isNotEmpty ?? false) 'facebook': facebook,
+      if (instagram?.isNotEmpty ?? false) 'instagram': instagram,
+      if (weekDays != null) 'weekDays': weekDays?.map((x) => x.toMap()).toList(),
+      if (primaryColor != null) 'primaryColor': primaryColor?.toRgbString,
+      if (secondaryColor != null) 'secondaryColor': secondaryColor?.toRgbString,
+      if (paymentMethods != null)
+        'paymentMethods': paymentMethods?.map((x) => x.paymentValue).toList(),
     };
   }
 }

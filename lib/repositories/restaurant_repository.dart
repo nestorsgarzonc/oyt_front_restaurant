@@ -10,9 +10,10 @@ final restaurantRepositoryProvider = Provider<RestaurantRepository>((ref) {
 });
 
 abstract class RestaurantRepository {
-  Future<Either<Failure, RestaurantModel>> getMenuByRestaurant(String tableId);
+  Future<Either<Failure, RestaurantModel>> getMenuByRestaurant();
   Future<Either<Failure, RestaurantModel>> getMenuByTable(String tableId);
   Future<Failure?> createRestaurant(RestaurantCreationModel restaurant);
+  Future<Failure?> updateRestaurant(RestaurantCreationModel restaurant);
 }
 
 class RestaurantRepositoryImpl implements RestaurantRepository {
@@ -25,9 +26,9 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
   final RestaurantDataSource dataSource;
 
   @override
-  Future<Either<Failure, RestaurantModel>> getMenuByRestaurant(String tableId) async {
+  Future<Either<Failure, RestaurantModel>> getMenuByRestaurant() async {
     try {
-      final restaurant = await dataSource.getMenuByRestaurant(tableId);
+      final restaurant = await dataSource.getMenuByRestaurant();
       return Right(restaurant);
     } catch (e) {
       return Left(Failure(e.toString()));
@@ -48,6 +49,16 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
   Future<Failure?> createRestaurant(RestaurantCreationModel restaurant) async {
     try {
       await dataSource.createRestaurant(restaurant);
+      return null;
+    } catch (e) {
+      return Failure(e.toString());
+    }
+  }
+
+  @override
+  Future<Failure?> updateRestaurant(RestaurantCreationModel restaurant) async {
+    try {
+      await dataSource.updateRestaurant(restaurant);
       return null;
     } catch (e) {
       return Failure(e.toString());
