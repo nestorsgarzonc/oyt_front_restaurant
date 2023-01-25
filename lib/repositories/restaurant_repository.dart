@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oyt_front_core/failure/failure.dart';
@@ -14,6 +16,8 @@ abstract class RestaurantRepository {
   Future<Either<Failure, RestaurantModel>> getMenuByTable(String tableId);
   Future<Failure?> createRestaurant(RestaurantCreationModel restaurant);
   Future<Failure?> updateRestaurant(RestaurantCreationModel restaurant);
+  Future<Failure?> updateRestaurantImage(Uint8List image);
+  Future<Failure?> updateRestaurantLogo(Uint8List logo);
 }
 
 class RestaurantRepositoryImpl implements RestaurantRepository {
@@ -59,6 +63,26 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
   Future<Failure?> updateRestaurant(RestaurantCreationModel restaurant) async {
     try {
       await dataSource.updateRestaurant(restaurant);
+      return null;
+    } catch (e) {
+      return Failure(e.toString());
+    }
+  }
+  
+  @override
+  Future<Failure?> updateRestaurantImage(Uint8List image) async{
+    try {
+      await dataSource.updateRestaurantImage(image);
+      return null;
+    } catch (e) {
+      return Failure(e.toString());
+    }
+  }
+  
+  @override
+  Future<Failure?> updateRestaurantLogo(Uint8List logo) async{
+    try {
+      await dataSource.updateRestaurantLogo(logo);
       return null;
     } catch (e) {
       return Failure(e.toString());

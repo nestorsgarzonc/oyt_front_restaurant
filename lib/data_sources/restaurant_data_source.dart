@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oyt_front_core/extensions/uint8list_extension.dart';
 import 'package:oyt_front_core/external/api_handler.dart';
 import 'package:oyt_front_core/logger/logger.dart';
 import 'package:oyt_front_restaurant/models/restaurant_creation_model.dart';
@@ -13,6 +16,8 @@ abstract class RestaurantDataSource {
   Future<RestaurantModel> getMenuByTable(String tableId);
   Future<void> createRestaurant(RestaurantCreationModel restaurant);
   Future<void> updateRestaurant(RestaurantCreationModel restaurant);
+  Future<void> updateRestaurantImage(Uint8List image);
+  Future<void> updateRestaurantLogo(Uint8List logo);
 }
 
 class RestaurantDataSourceImpl implements RestaurantDataSource {
@@ -60,6 +65,30 @@ class RestaurantDataSourceImpl implements RestaurantDataSource {
   Future<void> updateRestaurant(RestaurantCreationModel restaurant) async {
     try {
       await apiHandler.put('/restaurant', restaurant.toMap());
+    } catch (e, s) {
+      Logger.logError(e.toString(), s);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateRestaurantImage(Uint8List image) async {
+    try {
+      await apiHandler.put('/restaurant/image', {
+        'image': image.toBase64,
+      });
+    } catch (e, s) {
+      Logger.logError(e.toString(), s);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateRestaurantLogo(Uint8List logo) async {
+    try {
+      await apiHandler.put('/restaurant/logo', {
+        'logo': logo.toBase64,
+      });
     } catch (e, s) {
       Logger.logError(e.toString(), s);
       rethrow;
