@@ -182,6 +182,33 @@ class Menu extends Equatable {
     );
   }
 
+  Menu copyWithForUpdate({
+    String? id,
+    String? name,
+    String? img,
+    String? description,
+    List<MenuItem>? menuItems,
+    bool? isAvaliable,
+  }) {
+    return Menu(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      imgUrl: img ?? '',
+      description: description ?? this.description,
+      menuItems: menuItems ?? this.menuItems,
+      isAvaliable: isAvaliable ?? this.isAvaliable,
+    );
+  }
+
+  Map<String, dynamic> toMapCRUD() {
+    return {
+      'name': name,
+      if (imgUrl.isNotEmpty) 'img': imgUrl,
+      'description': description,
+      'isAvaliable': isAvaliable,
+    };
+  }
+
   Map<String, dynamic> toMap() {
     return {
       '_id': id,
@@ -192,8 +219,6 @@ class Menu extends Equatable {
       'isAvaliable': isAvaliable,
     };
   }
-
-  String toJson() => json.encode(toMap());
 }
 
 class MenuItem extends Equatable {
@@ -246,6 +271,23 @@ class MenuItem extends Equatable {
     );
   }
 
+  MenuItem copyWithForUpdate({
+    String? name,
+    int? price,
+    String? img,
+    bool? isAvaliable,
+    String? description,
+  }) {
+    return MenuItem(
+      id: id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      imgUrl: img ?? '',
+      isAvaliable: isAvaliable ?? this.isAvaliable,
+      description: description ?? this.description,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       '_id': id,
@@ -253,8 +295,17 @@ class MenuItem extends Equatable {
       'price': price,
       'img': imgUrl,
       'isAvaliable': isAvaliable,
+      'description': description,
     };
   }
 
-  String toJson() => json.encode(toMap());
+  Map<String, dynamic> toMapCRUD() {
+    return {
+      'name': name,
+      'description': description,
+      'price': price,
+      if (imgUrl.isNotEmpty) 'img': imgUrl,
+      'isAvaliable': isAvaliable,
+    };
+  }
 }
