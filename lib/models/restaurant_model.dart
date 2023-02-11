@@ -142,7 +142,7 @@ class Menu extends Equatable {
       imgUrl: map['img'] ?? '',
       description: map['description'] ?? '',
       menuItems: List<MenuItem>.from(map['menuItems']?.map((x) => MenuItem.fromMap(x))),
-      isAvaliable: map['isAvaliable'] ?? false,
+      isAvailable: map['isAvailable'] ?? false,
     );
   }
   const Menu({
@@ -151,7 +151,7 @@ class Menu extends Equatable {
     required this.imgUrl,
     required this.description,
     required this.menuItems,
-    required this.isAvaliable,
+    required this.isAvailable,
   });
 
   final String id;
@@ -159,10 +159,10 @@ class Menu extends Equatable {
   final String imgUrl;
   final String description;
   final List<MenuItem> menuItems;
-  final bool isAvaliable;
+  final bool isAvailable;
 
   @override
-  List<Object?> get props => [id, name, imgUrl, description, menuItems, isAvaliable];
+  List<Object?> get props => [id, name, imgUrl, description, menuItems, isAvailable];
 
   Menu copyWith({
     String? id,
@@ -170,7 +170,7 @@ class Menu extends Equatable {
     String? imgUrl,
     String? description,
     List<MenuItem>? menuItems,
-    bool? isAvaliable,
+    bool? isAvailable,
   }) {
     return Menu(
       id: id ?? this.id,
@@ -178,7 +178,7 @@ class Menu extends Equatable {
       imgUrl: imgUrl ?? this.imgUrl,
       description: description ?? this.description,
       menuItems: menuItems ?? this.menuItems,
-      isAvaliable: isAvaliable ?? this.isAvaliable,
+      isAvailable: isAvailable ?? this.isAvailable,
     );
   }
 
@@ -188,7 +188,7 @@ class Menu extends Equatable {
     String? img,
     String? description,
     List<MenuItem>? menuItems,
-    bool? isAvaliable,
+    bool? isAvailable,
   }) {
     return Menu(
       id: id ?? this.id,
@@ -196,7 +196,7 @@ class Menu extends Equatable {
       imgUrl: img ?? '',
       description: description ?? this.description,
       menuItems: menuItems ?? this.menuItems,
-      isAvaliable: isAvaliable ?? this.isAvaliable,
+      isAvailable: isAvailable ?? this.isAvailable,
     );
   }
 
@@ -205,7 +205,7 @@ class Menu extends Equatable {
       'name': name,
       if (imgUrl.isNotEmpty) 'img': imgUrl,
       'description': description,
-      'isAvaliable': isAvaliable,
+      'isAvailable': isAvailable,
     };
   }
 
@@ -216,7 +216,7 @@ class Menu extends Equatable {
       'img': imgUrl,
       'description': description,
       'menuItems': menuItems.map((x) => x.toMap()).toList(),
-      'isAvaliable': isAvaliable,
+      'isAvailable': isAvailable,
     };
   }
 }
@@ -230,7 +230,7 @@ class MenuItem extends Equatable {
       name: map['name'] ?? '',
       price: map['price']?.toInt() ?? 0,
       imgUrl: map['img'] ?? '',
-      isAvaliable: map['isAvaliable'] ?? false,
+      isAvailable: map['isAvailable'] ?? false,
       description: map['description'] ?? '',
     );
   }
@@ -240,25 +240,25 @@ class MenuItem extends Equatable {
     required this.name,
     required this.price,
     required this.imgUrl,
-    required this.isAvaliable,
+    required this.isAvailable,
   });
 
   final String id;
   final String name;
   final int price;
   final String imgUrl;
-  final bool isAvaliable;
+  final bool isAvailable;
   final String description;
 
   @override
-  List<Object?> get props => [id, name, price, imgUrl, isAvaliable];
+  List<Object?> get props => [id, name, price, imgUrl, isAvailable];
 
   MenuItem copyWith({
     String? id,
     String? name,
     int? price,
     String? imgUrl,
-    bool? isAvaliable,
+    bool? isAvailable,
     String? description,
   }) {
     return MenuItem(
@@ -266,7 +266,7 @@ class MenuItem extends Equatable {
       name: name ?? this.name,
       price: price ?? this.price,
       imgUrl: imgUrl ?? this.imgUrl,
-      isAvaliable: isAvaliable ?? this.isAvaliable,
+      isAvailable: isAvailable ?? this.isAvailable,
       description: description ?? this.description,
     );
   }
@@ -275,7 +275,7 @@ class MenuItem extends Equatable {
     String? name,
     int? price,
     String? img,
-    bool? isAvaliable,
+    bool? isAvailable,
     String? description,
   }) {
     return MenuItem(
@@ -283,7 +283,7 @@ class MenuItem extends Equatable {
       name: name ?? this.name,
       price: price ?? this.price,
       imgUrl: img ?? '',
-      isAvaliable: isAvaliable ?? this.isAvaliable,
+      isAvailable: isAvailable ?? this.isAvailable,
       description: description ?? this.description,
     );
   }
@@ -294,7 +294,7 @@ class MenuItem extends Equatable {
       'name': name,
       'price': price,
       'img': imgUrl,
-      'isAvaliable': isAvaliable,
+      'isAvailable': isAvailable,
       'description': description,
     };
   }
@@ -305,7 +305,7 @@ class MenuItem extends Equatable {
       'description': description,
       'price': price,
       if (imgUrl.isNotEmpty) 'img': imgUrl,
-      'isAvaliable': isAvaliable,
+      'isAvailable': isAvailable,
     };
   }
 }
