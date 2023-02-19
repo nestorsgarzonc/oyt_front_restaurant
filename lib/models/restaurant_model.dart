@@ -188,7 +188,7 @@ class Menu extends Equatable {
     String? img,
     String? description,
     List<MenuItem>? menuItems,
-    bool? isAvailable, required bool isAvaliable,
+    bool? isAvailable,
   }) {
     return Menu(
       id: id ?? this.id,
