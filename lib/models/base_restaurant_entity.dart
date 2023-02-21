@@ -14,7 +14,7 @@ class BaseRestaurantEntity extends Equatable {
 
   factory BaseRestaurantEntity.fromMap(Map<String, dynamic> map) {
     return BaseRestaurantEntity(
-      id: map['_id'] as int,
+      id: map['_id'] as String,
       firstName: map['user']['firstName'] as String,
       lastName: map['user']['lastName'] as String,
       email: map['user']['email'] as String,
@@ -25,7 +25,7 @@ class BaseRestaurantEntity extends Equatable {
     );
   }
 
-  final int id;
+  final String id;
   final String firstName;
   final String lastName;
   final String email;
@@ -40,7 +40,7 @@ class BaseRestaurantEntity extends Equatable {
   }
 
   BaseRestaurantEntity copyWith({
-    int? id,
+    String? id,
     String? firstName,
     String? lastName,
     String? email,
