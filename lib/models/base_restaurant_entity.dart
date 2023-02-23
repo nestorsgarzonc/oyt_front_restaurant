@@ -34,6 +34,18 @@ class BaseRestaurantEntity extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
 
+  bool filter(String filter) {
+    if (filter.isEmpty) return true;
+    final firstNameLower = firstName.toLowerCase();
+    final lastNameLower = lastName.toLowerCase();
+    final fullName = '$firstName $lastName';
+    final emailLower = email.toLowerCase();
+    return firstNameLower.contains(filter) ||
+        lastNameLower.contains(filter) ||
+        emailLower.contains(filter) ||
+        fullName.contains(filter);
+  }
+
   @override
   List<Object?> get props {
     return [id, firstName, lastName, email, isAvailable, restaurantId, createdAt, updatedAt];
