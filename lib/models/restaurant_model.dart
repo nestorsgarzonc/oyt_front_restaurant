@@ -23,7 +23,7 @@ class RestaurantModel extends Equatable {
       tableName: map['name'] as String,
       categories: List<Menu>.from(map['menu']?.map((x) => Menu.fromMap(x))),
       paymentMethods:
-          (map['paymentMethods'] as List).map((e) => PaymentMethod.fromString(e)).toList(),
+          (map['paymentMethods'] as List).map((e) => PaymentMethod.fromString(e['description'])).toList(),
       weekDays: (map['weekDays'] as List)
           .map<Weekday>((x) => Weekday.fromMap(x as Map<String, dynamic>))
           .toList(),
