@@ -68,9 +68,9 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
       return Failure(e.toString());
     }
   }
-  
+
   @override
-  Future<Failure?> updateRestaurantImage(Uint8List image) async{
+  Future<Failure?> updateRestaurantImage(Uint8List image) async {
     try {
       await dataSource.updateRestaurantImage(image);
       return null;
@@ -78,9 +78,9 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
       return Failure(e.toString());
     }
   }
-  
+
   @override
-  Future<Failure?> updateRestaurantLogo(Uint8List logo) async{
+  Future<Failure?> updateRestaurantLogo(Uint8List logo) async {
     try {
       await dataSource.updateRestaurantLogo(logo);
       return null;

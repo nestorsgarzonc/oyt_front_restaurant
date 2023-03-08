@@ -1,5 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'dart:ui';
+
 import 'package:equatable/equatable.dart';
 import 'package:oyt_front_core/enums/payments_enum.dart';
 import 'package:oyt_front_core/enums/weekdays_enum.dart';
@@ -23,7 +25,7 @@ class RestaurantModel extends Equatable {
       tableName: map['name'] as String,
       categories: List<Menu>.from(map['menu']?.map((x) => Menu.fromMap(x))),
       paymentMethods: (map['paymentMethods'] as List)
-          .map((e) => PaymentMethod.fromString(e['description']))
+          .map((e) => PaymentMethods.fromMap(e))
           .toList(),
       weekDays: (map['weekDays'] as List)
           .map<Weekday>((x) => Weekday.fromMap(x as Map<String, dynamic>))
@@ -65,7 +67,7 @@ class RestaurantModel extends Equatable {
   final String? logoUrl;
   final String tableName;
   final List<Menu> categories;
-  final List<PaymentMethod> paymentMethods;
+  final List<PaymentMethods> paymentMethods;
   final List<Weekday> weekDays;
   final Color? primaryColor;
   final Color? secondaryColor;
@@ -105,7 +107,7 @@ class RestaurantModel extends Equatable {
     String? logoUrl,
     String? tableName,
     List<Menu>? categories,
-    List<PaymentMethod>? paymentMethods,
+    List<PaymentMethods>? paymentMethods,
     List<Weekday>? weekDays,
     Color? primaryColor,
     Color? secondaryColor,
@@ -131,6 +133,23 @@ class RestaurantModel extends Equatable {
       instagram: instagram ?? this.instagram,
     );
   }
+}
+
+class PaymentMethods extends Equatable {
+  const PaymentMethods(this.method, this.id);
+
+  factory PaymentMethods.fromMap(Map<String, dynamic> map) {
+    return PaymentMethods(
+      PaymentMethod.fromString(map['description']),
+      map['_id'] as String,
+    );
+  }
+
+  final PaymentMethod method;
+  final String id;
+
+  @override
+  List<Object?> get props => [method, id];
 }
 
 class Menu extends Equatable {
